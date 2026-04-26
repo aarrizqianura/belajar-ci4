@@ -7,14 +7,14 @@ use CodeIgniter\HTTP\ResponseInterface;
 
 class Akademik extends BaseController
 {
-    // 1. Halaman utama
+    // 1. Halaman utama (Method index() menampilkan judul 'Sistem Informasi Akademik' dan nama mahasiswa)
     public function index(): string
     {
         return "<h1>Sistem Informasi Akademik</h1>
                 <p>Nama: Ahmad Arrizqianur Aslamudin</p>";
     }
 
-    // 2. Daftar mata kuliah
+    // 2. Daftar mata kuliah (Method matkul() menampilkan daftar 5 mata kuliah)
     public function matkul(): string
     {
         $matkul = [
@@ -34,7 +34,7 @@ class Akademik extends BaseController
         return $html;
     }
 
-    // 3. Method dengan parameter
+    // 3. Method dengan parameter (Method nilai($nim) menerima parameter NIM dan menampilkan pesan 'Nilai mahasiswa dengan NIM: [nim]')
     public function nilai($nim): string
     {
         return "<h1>Nilai Mahasiswa</h1>
