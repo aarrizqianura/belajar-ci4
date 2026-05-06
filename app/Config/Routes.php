@@ -13,6 +13,9 @@ $routes->get('/', 'Beranda::index');
 // Route halaman tentang 
 $routes->get('tentang', 'Beranda::tentang');
 
+// Route Profil
+$routes->get('profil', 'Profil::index');
+
 // Route Akademik
 $routes->get('akademik', 'Akademik::index');
 $routes->get('akademik/matkul', 'Akademik::matkul');

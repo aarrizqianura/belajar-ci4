@@ -84,14 +84,13 @@ icons.css'
                         <li class='breadcrumb-item'>
                             <a href='<?= base_url('/') ?>'>Beranda</a>
                         </li>
-                        <?php foreach ($breadcrumb as $crumb): ?>
-                            <?php if ($loop->last): ?>
-                                <li class='breadcrumb-item active'><?=
-                                                                    esc($crumb['label']) ?></li>
+                        <?php $last_key = array_key_last($breadcrumb) ?? null; ?>
+                        <?php foreach ($breadcrumb as $key => $crumb): ?>
+                            <?php if ($key === $last_key): ?>
+                                <li class='breadcrumb-item active'><?= esc($crumb['label']) ?></li>
                             <?php else: ?>
                                 <li class='breadcrumb-item'>
-                                    <a href='<?= esc($crumb['url']) ?>'><?=
-                                                                        esc($crumb['label']) ?></a>
+                                    <a href='<?= esc($crumb['url']) ?>'><?= esc($crumb['label']) ?></a>
                                 </li>
                             <?php endif; ?>
                         <?php endforeach; ?>
