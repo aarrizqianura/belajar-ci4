@@ -23,3 +23,6 @@ $routes->get('akademik/nilai/(:any)', 'Akademik::nilai/$1');
 
 // Route controller Demo 
 $routes->get('demo', 'Demo::index');
+
+// Route Galeri
+$routes->get('galeri', 'Galeri::index');
