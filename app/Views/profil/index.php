@@ -46,6 +46,19 @@
     <div class='col-lg-4'>
         <div class='card h-100 shadow-sm'>
             <div class='card-body text-center'>
+                <!-- Avatar -->
+                <div class='mb-4'>
+                    <img src='<?= avatar_url($nama, 120) ?>'
+                        alt='Avatar <?= esc($nama) ?>'
+                        class='rounded-circle border border-3 border-primary'
+                        width='120' height='120'>
+                </div>
+
+                <!-- Inisial dan Nama -->
+                <h6 class='text-muted mb-3'>
+                    <span class='badge bg-primary'><?= inisial_nama($nama) ?></span>
+                </h6>
+
                 <h5 class='card-title mb-3'><i class='bi bi-graph-up'></i> Indeks Prestasi</h5>
                 <h2 class='mb-3'><?= esc($ipk) ?></h2>
                 <?php

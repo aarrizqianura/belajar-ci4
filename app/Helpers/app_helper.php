@@ -79,3 +79,38 @@ if (!function_exists('status_badge')) {
         return "<span class='badge bg-{$warna}'>" . ucfirst($status) . "</span>";
     }
 }
+
+if (!function_exists('inisial_nama')) {
+    /** 
+     * Mengambil inisial dari nama lengkap 
+     * @param string $namaLengkap Contoh: 'Ahmad Arrizqianur Aslamudin' 
+     * @return string Inisial nama (contoh: 'AAA') 
+     */
+    function inisial_nama(string $namaLengkap): string
+    {
+        $nama_array = explode(' ', trim($namaLengkap));
+        $inisial = '';
+
+        foreach ($nama_array as $nama) {
+            if (!empty($nama)) {
+                $inisial .= strtoupper($nama[0]);
+            }
+        }
+
+        return $inisial;
+    }
+}
+
+if (!function_exists('avatar_url')) {
+    /** 
+     * Menghasilkan URL avatar dari ui-avatars.com 
+     * @param string $nama Nama untuk ditampilkan di avatar 
+     * @param int $size Ukuran avatar dalam pixel (default: 128) 
+     * @return string URL avatar 
+     */
+    function avatar_url(string $nama, int $size = 128): string
+    {
+        $encoded_nama = urlencode($nama);
+        return "https://ui-avatars.com/api/?name={$encoded_nama}&size={$size}&background=random";
+    }
+}
