@@ -38,6 +38,18 @@
                         </a>
                     </li>
                     <li class='nav-item'>
+                        <a class='nav-link <?= str_contains(current_url(), '/buku') ? 'active' : '' ?>'
+                            href='<?= base_url('buku') ?>'>
+                            <i class='bi bi-journals'></i> Buku
+                        </a>
+                    </li>
+                    <li class='nav-item'>
+                        <a class='nav-link <?= str_contains(current_url(), '/kategori') ? 'active' : '' ?>'
+                            href='<?= base_url('kategori') ?>'>
+                            <i class='bi bi-tags'></i> Kategori
+                        </a>
+                    </li>
+                    <li class='nav-item'>
                         <a class='nav-link <?= str_contains(current_url(), '/akademik') ? 'active' : '' ?>'
                             href='<?= base_url('akademik') ?>'>
                             <i class='bi bi-book-half'></i> Akademik
