@@ -135,6 +135,42 @@ class Buku extends BaseController
     }
 
     // ────────────────────────────────────── 
+    // EXPORT - Ekspor ke CSV 
+    // ────────────────────────────────────── 
+    public function ekspor()
+    {
+        $buku = $this->bukuModel->getBukuDenganKategori();
+        $filename = 'buku-export-' . date('Y-m-d') . '.csv';
+
+        $output = fopen('php://temp', 'w');
+        $header = ['No', 'Kode', 'Judul', 'Penulis', 'Penerbit', 'Tahun', 'Stok', 'Kategori'];
+        fputcsv($output, $header);
+
+        $no = 1;
+        foreach ($buku as $row) {
+            fputcsv($output, [
+                $no++,
+                $row['kode_buku'],
+                $row['judul'],
+                $row['penulis'],
+                $row['penerbit'],
+                $row['tahun'],
+                $row['stok'],
+                $row['nama_kategori'] ?? '-'
+            ]);
+        }
+
+        rewind($output);
+        $csvData = stream_get_contents($output);
+        fclose($output);
+
+        return $this->response
+            ->setContentType('text/csv')
+            ->setHeader('Content-Disposition', 'attachment; filename="' . $filename . '"')
+            ->setBody($csvData);
+    }
+
+    // ────────────────────────────────────── 
     // PRIVATE HELPER - Kumpulkan data dari form 
     // ────────────────────────────────────── 
     private function ambilDataForm(): array
