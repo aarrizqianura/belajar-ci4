@@ -135,6 +135,19 @@ class Buku extends BaseController
     }
 
     // ────────────────────────────────────── 
+    // STATISTIK - Halaman Statistik Buku
+    // ────────────────────────────────────── 
+    public function statistik(): string
+    {
+        $statistik = $this->bukuModel->getStatistik();
+
+        return view('buku/statistik', [
+            'title'     => 'Statistik Buku',
+            'statistik' => $statistik
+        ]);
+    }
+
+    // ────────────────────────────────────── 
     // EXPORT - Ekspor ke CSV 
     // ────────────────────────────────────── 
     public function ekspor()

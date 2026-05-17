@@ -8,6 +8,9 @@
          <p class='text-muted mb-0'>Total: <?= $total ?> buku ditemukan</p>
      </div>
      <div>
+         <a href='<?= base_url('buku/statistik') ?>' class='btn btn-info me-2 text-white'>
+             <i class='bi bi-bar-chart'></i> Statistik
+         </a>
          <a href='<?= base_url('buku/ekspor') ?>' class='btn btn-success me-2'>
              <i class='bi bi-file-earmark-excel'></i> Ekspor CSV
          </a>

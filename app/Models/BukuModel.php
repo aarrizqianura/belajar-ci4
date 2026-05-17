@@ -90,16 +90,22 @@ class BukuModel extends Model
     public function getStatistik(): array
     {
         $db = \Config\Database::connect();
+        $totalBuku = $this->countAll();
+        $totalStok = (int) $db->table('buku')->selectSum('stok')->get()->getRow()->stok;
+        $rataStok = $totalBuku > 0 ? round($totalStok / $totalBuku, 2) : 0;
+
         return [
-            'total'          => $this->countAll(),
-            'total_stok'     => (int)
-            $db->table('buku')->selectSum('stok')->get()->getRow()->stok,
+            'total'          => $totalBuku,
+            'total_stok'     => $totalStok,
+            'rata_stok'      => $rataStok,
             'per_kategori'   => $db->table('buku')
-                ->select('kategori.nama, COUNT(buku.id) AS jumlah')
+                ->select('kategori.nama, COUNT(buku.id) AS jumlah, SUM(buku.stok) as total_stok')
                 ->join('kategori', 'kategori.id = buku.kategori_id', 'left')
                 ->groupBy('buku.kategori_id')
                 ->orderBy('jumlah', 'DESC')
                 ->get()->getResultArray(),
+            'top_stok'       => $this->orderBy('stok', 'DESC')->limit(5)->find(),
+            'stok_kosong'    => $this->where('stok', 0)->orderBy('judul', 'ASC')->find(),
         ];
     }
 }
