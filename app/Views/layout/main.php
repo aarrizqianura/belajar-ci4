@@ -73,6 +73,14 @@
                             <i class='bi bi-info-circle'></i> Tentang
                         </a>
                     </li>
+                    <?php if (session()->get('role') === 'admin'): ?>
+                    <li class='nav-item'>
+                        <a class='nav-link <?= str_contains(current_url(), '/admin/pengguna') ? 'active' : '' ?>'
+                            href='<?= base_url('admin/pengguna') ?>'>
+                            <i class='bi bi-people'></i> Pengguna
+                        </a>
+                    </li>
+                    <?php endif; ?>
                 </ul>
 
                 <div class='navbar-nav'>
