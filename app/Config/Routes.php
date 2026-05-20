@@ -80,4 +80,10 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
         $routes->get('/',  'Admin\Dashboard::index');  
         $routes->get('pengguna',   'Admin\Pengguna::index'); 
     }); 
+  
+    // Akun - area member untuk ganti password dll
+    $routes->group('akun', function ($routes) { 
+        $routes->get('ganti-password', 'Akun::gantiPassword'); 
+        $routes->post('proses-ganti-password', 'Akun::prosesGantiPassword'); 
+    });
 }); 
