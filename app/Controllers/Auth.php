@@ -24,6 +24,16 @@ class Auth extends BaseController
     /** Proses autentikasi dari form login. */ 
     public function prosesLogin() 
     { 
+        $session = session();
+        $identifier = $this->request->getPost('identifier');
+        $attempts_key = 'login_attempts_' . $identifier;
+        $lockout_key = 'login_lockout_' . $identifier;
+
+        if (!empty($identifier) && $session->getTempdata($lockout_key)) {
+            $session->setFlashdata('error', 'Akun dikunci selama 10 menit akibat terlalu banyak percobaan login.');
+            return redirect()->to('/login')->withInput();
+        }
+
         $rules = [ 
             'identifier' => 'required|min_length[3]', 
             'password'   => 'required|min_length[6]', 
@@ -34,7 +44,6 @@ class Auth extends BaseController
                              ->with('errors', $this->validator->getErrors()); 
         } 
   
-        $identifier = $this->request->getPost('identifier'); 
         $password   = $this->request->getPost('password'); 
         $user = $this->userModel->cariUserAktif($identifier); 
   
@@ -46,9 +55,24 @@ class Auth extends BaseController
             // Jika user tidak ada, tetap jalankan password_verify 
             // untuk mencegah timing attack yang mengukur waktu respons 
             if (!$user) password_verify($password, '$2y$12$dummy_hash_untuk_timing'); 
+
+            $attempts = $session->getTempdata($attempts_key) ?? 0;
+            $attempts++;
+            
+            if ($attempts >= 5) {
+                $session->setTempdata($lockout_key, true, 600); // 10 menit
+                $session->removeTempdata($attempts_key);
+                $pesanError = 'Akun dikunci selama 10 menit akibat terlalu banyak percobaan login.';
+            } else {
+                $session->setTempdata($attempts_key, $attempts, 600);
+            }
+
             session()->setFlashdata('error', $pesanError); 
             return redirect()->to('/login'); 
         } 
+        
+        $session->removeTempdata($attempts_key);
+        $session->removeTempdata($lockout_key); 
   
         // Login berhasil — simpan data ke session 
         session()->set([ 
